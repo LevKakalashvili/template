@@ -1,15 +1,18 @@
 # === Настрой исключаемые каталоги ===
 $excludeDirs = @(
     '.git',
+    '.gitlab-ci.yml',
+    '.gitignore',
     '.idea',
     'logs',
     'data',
-    'venv',
+    '.venv',
     '_CI_CD',
     '__pycache__',
     '.pytest_cache',
-    'tests'
-
+    'tests',
+    'prepare_folder_ci_cd.ps1',
+    'poetry.lock'
 )
 
 # Получить имя текущей директории
