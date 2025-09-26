@@ -7,6 +7,7 @@ $excludeDirs = @(
     'logs',
     'data',
     '.venv',
+    'venv',
     '_CI_CD',
     '__pycache__',
     '.pytest_cache',
