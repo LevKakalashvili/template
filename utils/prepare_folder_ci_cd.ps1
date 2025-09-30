@@ -7,14 +7,13 @@ $excludeDirs = @(
     'logs',
     'data',
     '.venv',
-    'venv',
     '_CI_CD',
     '__pycache__',
     '.pytest_cache',
+    '.ruff_cache',
     'tests',
     'prepare_folder_ci_cd.ps1',
     'poetry.lock',
-    '.ruff_cache',
     '.run'
 )
 
@@ -83,3 +82,16 @@ function Copy-With-Exclude {
 }
 
 Copy-With-Exclude -source "." -dest $targetDir -excludeDirs $excludeDirs -excludeFiles $excludeFiles -excludeFilePatterns $excludeFilePatterns
+
+# Путь к архиву: рядом со скриптом, имя такое же как у папки
+$zipPath = "$PSScriptRoot\$targetDir.zip"
+
+# Если архив уже существует — удалим его
+if (Test-Path $zipPath) {
+    Remove-Item $zipPath -Force
+}
+
+# Архивируем папку
+Compress-Archive -Path "$PSScriptRoot\$targetDir" -DestinationPath $zipPath
+
+Write-Host "Success: $zipPath"
