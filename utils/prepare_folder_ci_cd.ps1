@@ -13,7 +13,9 @@ $excludeDirs = @(
     '.pytest_cache',
     'tests',
     'prepare_folder_ci_cd.ps1',
-    'poetry.lock'
+    'poetry.lock',
+    '.ruff_cache',
+    '.run'
 )
 
 # Получить имя текущей директории
