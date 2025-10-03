@@ -1,0 +1,23 @@
+from typing import Optional, Any, Type, TypeVar
+from sqlalchemy.orm import Session
+from sqlalchemy import select
+from sqlalchemy.orm import DeclarativeMeta
+
+ModelType = TypeVar("ModelType", bound=DeclarativeMeta)
+
+
+class BaseRepository:
+    def __init__(self, model: Type[ModelType], session: Session):
+        self.model = model
+        self.session = session
+
+    def get_by(self, field: str, value: Any) -> Optional[ModelType]:
+        """
+        Универсальный метод для получения записи по любому полю.
+        """
+        if not hasattr(self.model, field):
+            raise ValueError(f"Field '{field}' is not a valid column of {self.model.__name__}")
+
+        column = getattr(self.model, field)
+        stmt = select(self.model).where(column == value)
+        return self.session.scalar(stmt)
