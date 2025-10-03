@@ -1,0 +1,14 @@
+from typing import Optional
+from sqlalchemy.orm import Session
+from db.models import Entity
+from .base import BaseRepository
+
+
+class EntityRepository(BaseRepository):
+    """
+    Репозиторий для работы с какой-то сущностью.
+    Наследует универсальные методы из BaseRepository.
+    """
+
+    def __init__(self, session: Session):
+        super().__init__(Entity, session)
