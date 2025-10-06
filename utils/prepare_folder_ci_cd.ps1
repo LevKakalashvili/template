@@ -14,8 +14,7 @@ $excludeDirs = @(
     'tests',
     'prepare_folder_ci_cd.ps1',
     'poetry.lock',
-    '.run',
-    '.zip'
+    '.run'
 )
 
 # Получить имя текущей директории
@@ -41,7 +40,8 @@ $excludeFilePatterns = @(
     '*.yml',
     '*.log',
     '*.tmp',
-    '*.ps1'
+    '*.ps1',
+    '*.zip'
 )
 
 # Создать целевой каталог, если его нет
