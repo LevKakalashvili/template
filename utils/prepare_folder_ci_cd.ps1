@@ -14,7 +14,8 @@ $excludeDirs = @(
     'tests',
     'prepare_folder_ci_cd.ps1',
     'poetry.lock',
-    '.run'
+    '.run',
+    '.zip'
 )
 
 # Получить имя текущей директории
