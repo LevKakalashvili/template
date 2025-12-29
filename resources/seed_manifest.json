@@ -1,0 +1,16 @@
+{
+  "commands": {
+    "init_project_templates": {
+      "files": [
+        "project_templates.json"
+      ]
+    },
+
+    "all": {
+      "glob": "*.json",
+      "exclude": [
+        "seed_manifest.json"
+      ]
+    }
+  }
+}
