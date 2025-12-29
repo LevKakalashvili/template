@@ -28,7 +28,7 @@ COPY ./src "${PROJECT_DIR}"
 
 COPY ./src/entrypoint.sh /entrypoint.sh
 ```
-3. Нужно заменить. Из-за моего парля это нужно делать
+3. Из-за моего парля это нужно заменить. 
 ```dockerfile
 RUN if [ "$NEXUS_PIP_IS_ENABLE" = "true" ]; then \
     echo "Using PyPI repository - ${NEXUS_PIP_URL}"; \
@@ -38,4 +38,5 @@ RUN if [ "$NEXUS_PIP_IS_ENABLE" = "true" ]; then \
     echo "Using default PyPI repository"; \
     fi
 ```
+
 
