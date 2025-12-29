@@ -7,7 +7,7 @@
         args:
             REQUIREMENTS_FILE: ./requirements.local.txt
 ```
-Стандартная фигня
+# Проблема с миграцией
 ```logs
 Attaching to publishing_api publishing_api
 Apply migrations publishing_api
@@ -15,13 +15,13 @@ Apply migrations publishing_api
 FAILED: No config file 'alembic.ini' found, or file has no '[alembic]' section publishing_api exited with code 1
 ```
 
-# Dockerfile
+## Dockerfile
 1. Перед строчкой в ``Dockerfile``
 ```dockerfile
 COPY ./src/entrypoint.sh /entrypoint.sh
 ```
 
-2. Нужно прописать дополнительное копирование
+2. Нужно прописать дополнительное копирование. Обычно в `Dockerfile` - 84 - 85 строчки
 ```dockerfile
 WORKDIR "${PROJECT_DIR}"
 COPY ./src "${PROJECT_DIR}"
