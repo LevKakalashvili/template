@@ -2,10 +2,10 @@ import asyncio
 import os
 from pathlib import Path
 
+from core.logger import logger
 from db.database_async import session_scope
 from management.base.command import BaseCommand
 from management.seed import collect_models_registry, resolve_seed_files, seed_files
-from management.seed.logging import setup_cli_logger
 from management.seed.manifest import DEFAULT_JSON_GLOB, DEFAULT_MANIFEST_NAME
 
 DEFAULT_RESOURCES_DIR = Path(__file__).resolve().parents[1] / "resources"
@@ -33,7 +33,6 @@ async def _run(
     exclude: list[str] | None,
 ) -> None:
     command_name = Path(__file__).stem  # init_project_templates
-    logger = setup_cli_logger(f"management.command.{command_name}")
 
     paths = resolve_seed_files(
         command_name=command_name,
@@ -45,7 +44,7 @@ async def _run(
         exclude=exclude,
     )
 
-    logger.info(f"Seed files for '{command_name}': {', '.join(str(p) for p in paths)}")
+    logger.info(f"Executing command '{command_name}'. Loading files: {', '.join(str(p) for p in paths)}")
 
     registry = collect_models_registry()
 

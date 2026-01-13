@@ -2,10 +2,16 @@ from __future__ import annotations
 
 from typing import Any
 
-from sqlalchemy import inspect as sa_inspect
-
 
 def _snake(name: str) -> str:
+    """
+    Преобразует CamelCase → snake_case.
+
+    Нужно для того, чтобы JSON мог использовать:
+    - имя ORM-класса
+    - __tablename__
+    - snake_case имя класса
+    """
     out: list[str] = []
     for ch in name:
         if ch.isupper() and out:
@@ -16,12 +22,14 @@ def _snake(name: str) -> str:
 
 def collect_models_registry() -> dict[str, Any]:
     """
-    Разрешаем ключ верхнего уровня как:
-      - имя ORM класса
-      - __tablename__
-      - snake_case имени класса
-    Ключи нормализуем lower().
-    При коллизиях — падаем.
+    Собирает реестр ORM-моделей для разрешения ключей JSON.
+
+    JSON ключ верхнего уровня может быть:
+    - именем ORM класса (ProjectTemplates)
+    - __tablename__ (project_templates)
+    - snake_case имени класса (project_templates)
+
+    Все ключи нормализуются в lower().
     """
     from db import models as models_module
 
@@ -32,6 +40,8 @@ def collect_models_registry() -> dict[str, Any]:
         if not key:
             return
         norm = key.strip().lower()
+
+        # Коллизии считаем ошибкой конфигурации
         if norm in registry and registry[norm] is not model:
             existing = registry[norm]
             raise RuntimeError(
@@ -51,10 +61,3 @@ def collect_models_registry() -> dict[str, Any]:
         add(_snake(cls.__name__), cls)
 
     return registry
-
-
-def is_join_entity(Model: Any) -> bool:
-    """Join-entity = таблица с >= 2 FK колонками."""
-    mapper = sa_inspect(Model)
-    fk_cols = [c for c in mapper.columns if c.foreign_keys]
-    return len(fk_cols) >= 2

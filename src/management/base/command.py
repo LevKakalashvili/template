@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from argparse import ArgumentParser, Namespace
 
-from corelib.parser import Parser
+from core.parser import Parser
 
 
 class AbstractCommand(ABC):

@@ -91,8 +91,20 @@ if (Test-Path $zipPath) {
     Remove-Item $zipPath -Force
 }
 
-Compress-Archive -Path "$targetDir\*" -DestinationPath $zipPath -Force
-Write-Host "Архив создан: $zipPath"
+try {
+    Compress-Archive -Path (Join-Path $targetDir '*') -DestinationPath $zipPath -Force -ErrorAction Stop
+
+    if (Test-Path $zipPath) {
+        Write-Host "Архив создан: $zipPath"
+
+        # Удаляем каталог, из которого собирался архив
+        Remove-Item -Path $targetDir -Recurse -Force -ErrorAction Stop
+        Write-Host "Каталог удалён: $targetDir"
+    }
+}
+catch {
+    Write-Host "Ошибка при создании архива: $($_.Exception.Message)"
+}
 
 # === Открыть проводник в текущей папке ===
 Invoke-Item (Get-Location)
