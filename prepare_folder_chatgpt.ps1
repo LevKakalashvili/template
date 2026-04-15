@@ -14,7 +14,7 @@ $excludeDirs = @(
     'prepare_folder_ci_cd.ps1',
     'prepare_folder_chatgpt.ps1',
     'poetry.lock',
-    '.ruff_cache',
+    '.ruff_cache'
 )
 
 # Получить имя текущей директории
