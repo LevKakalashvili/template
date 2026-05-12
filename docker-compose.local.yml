@@ -10,7 +10,7 @@ services:
       - publishing_network
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/local/Dockerfile
       target: local
       args:
         PROJECT_DIR: ${PROJECT_DIR:-/app}
